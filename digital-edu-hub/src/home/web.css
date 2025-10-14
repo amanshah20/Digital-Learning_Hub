@@ -1,0 +1,219 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background: linear-gradient(to top,rgba(0,0,0,0.5)50%,rgba(0,0,0,0.5)50%),url(tree.avif);
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 100vh;
+}
+
+ul{
+    margin-left: 420px;
+}
+ul li{
+    display: inline;
+    margin-right: 60px;
+    
+
+}
+.logo{
+    margin-top: 10px;
+    color: #ff7200;
+    margin-left: 70px;
+    font-size: 40px;
+}
+
+ul li a{
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    font-family: Arial;
+    font-weight: bold;
+    transition: 0.2s ease-in-out;
+}
+ ul li a:hover{
+    color: #ff7200;
+ }
+
+.srch{
+    margin-left: 120px;
+    font-family: 'Times New Roman';
+    width: 200px;
+    height: 40px;
+    background: transparent;
+    border: 1px solid #ff7200;
+    color: #fff;
+    border-right: none;
+    font-size: 16px;
+    padding:10px;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+}
+.btn{
+    width: 100px;
+    height: 40px;
+    background: #ff7200;
+    border: 2px solid #ff7200;
+    margin-top: 13px;
+    color:#fff;
+    font-size: 15px;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.content{
+    color:#fff;
+    margin-top: 200px;
+    margin-left: 70px;
+}
+span{
+    color: #ff7200;
+}
+
+.one{
+    color: #ff7200;
+    font-size: 20px;
+    font-family: Arial;
+}
+
+.content .par{
+    font-family: Arial;
+    letter-spacing: 1.2px;
+    line-height: 30px;
+}
+
+.content h1{
+    font-family: 'Times New Roman';
+    font-size: 50px;
+    letter-spacing: 2px;
+}
+
+.content .cn{
+    width: 160px;
+    height: 40px;
+    margin-top: 25px;
+    background: #ff7200;
+    border: none;
+    font-size: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.content .cn a{
+    text-decoration: none;
+    color: black;
+    transition: 0.3s ease;
+}
+
+.cn a:hover{
+    color: #fff;
+}
+.form{
+    width: 250px;
+    height: 380px;
+    position: absolute;
+    background: linear-gradient(to top,rgba(0,0,0,0.5)50%,rgba(0,0,0,0.5)50%);
+    border-radius: 10px;
+    margin-left: 1000px;
+    margin-top: -330px;
+}
+
+.form h2{
+    width: 200px;
+    font-family: sans-serif;
+    text-align: center;
+    color: #ff7200;
+    font-size: 22px;
+    background-color: #fff;
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-left: 18px;
+    padding: 5px;
+}
+
+.form input{
+    width: 200px;
+    height: 35px;
+    background: transparent;
+    border-bottom:1px solid #ff7200;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    color:#fff;
+    letter-spacing: 1px;
+    margin-top: 20px;
+    font-family: sans-serif;
+    margin-left: 25px;
+}
+
+::placeholder{
+    color: #fff;
+    font-family: Arial;
+}
+
+.btnn{
+    width: 200px;
+    height: 40px;
+    background: #ff7200;
+    border: none;
+    margin: 25px;
+    font-size: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #fff;
+    transition: 0.4s;
+}
+.btnn:hover{
+    background: #fff;
+    color: #ff7200;
+}
+.btnn a{
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+}
+.form .link{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 17px;
+    margin-top: 0px;
+    text-align: center;
+}
+
+.form .link a{
+    text-decoration: none;
+    color: #ff7200;
+}
+.liw{
+    padding: 15px;
+    padding-bottom: 0px;
+    text-align: center;
+}
+
+.social_media{
+    margin-top: 18px;
+    margin-left: 50px;
+    font-size: 25px;
+}
+.social_media i{
+    color: rgb(12, 11, 14);
+    padding: 0 5px;
+
+}
+.fb i:hover{
+    transform: scale(1.5);
+    color: #1877F2;
+}
+.twit i:hover{
+    transform: scale(1.5);
+    color: #1DA1F2;
+}
+.inst i:hover{
+    transform: scale(1.5);
+    color:rgb(239, 15, 11);
+}
+.yout i:hover{
+    color: #FF0000;
+    transform: scale(1.5);
+}
