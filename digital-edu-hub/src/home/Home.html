@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LPU UMS Login</title>
+    <link rel="stylesheet" href="Home.css">
+</head>
+<body>
+    <div class="login-container">
+        <h1>Academy<span>One</span></h1>
+        <select id="userType">
+            <option value="">Select User Type</option>
+            <option value="teacher">Teacher</option>
+            <option value="student">Student</option>
+        </select>
+        <input type="text" id="userId" placeholder="Enter your ID">
+        <input type="password" id="password" placeholder="Enter your password">
+        <div class="error" id="error"></div>
+        <button onclick="login()">Login</button>
+        <button id="resetBtn" onclick="resetPassword()" style="margin-top:10px; background:#777;">Reset Password</button>
+    </div>
+
+    <script src="Home.js"></script>
+</body>
+</html>

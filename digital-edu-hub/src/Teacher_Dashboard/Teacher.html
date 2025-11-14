@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Teacher Dashboard</title>
+<link rel="stylesheet" href="Teacher.css" />
+</head>
+<body>
+<header>
+  <h1>Teacher Dashboard</h1>
+  <div id="teacher-info"></div>
+</header>
+
+<main class="dashboard">
+  <!-- COLLAPSIBLE SECTION : Live Class Schedule -->
+  <article class="card" id="card-schedule">
+    <header class="card-header clickable">
+      <h2>Live Class Schedule</h2>
+      <button class="toggle-btn" aria-expanded="false">Open</button>
+    </header>
+    <div class="card-body collapsed" id="schedule-section">
+      <ul id="class-schedule" class="list"></ul>
+
+      <hr />
+      <h3>Schedule a New Class</h3>
+      <input type="text" id="new-class-title" placeholder="Subject - 10:00 AM" />
+      <button id="add-class-btn">Add Class</button>
+      <div class="small-note">Schedules saved for the logged-in teacher only.</div>
+      <div id="schedules-history"></div>
+    </div>
+  </article>
+
+  <!-- COLLAPSIBLE SECTION : Students (list only) -->
+  <article class="card" id="card-students">
+    <header class="card-header clickable">
+      <h2>Students</h2>
+      <button class="toggle-btn" aria-expanded="false">Open</button>
+    </header>
+    <div class="card-body collapsed" id="students-section">
+      <p>Total Students Logged In: <strong id="total-students">0</strong></p>
+      <ul id="students-list" class="list"></ul>
+      <div class="small-note">Student login list is shared globally but attendance & actions are saved per teacher.</div>
+    </div>
+  </article>
+
+  <!-- COLLAPSIBLE SECTION : Attendance -->
+  <article class="card" id="card-attendance">
+    <header class="card-header clickable">
+      <h2>Attendance Tracker</h2>
+      <button class="toggle-btn" aria-expanded="false">Open</button>
+    </header>
+    <div class="card-body collapsed" id="attendance-section">
+      <p>Total Students: <span id="total-students-2">0</span></p>
+
+      <table id="student-table">
+        <thead>
+          <tr><th>Student ID</th><th>Present</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+
+      <div class="attendance-actions">
+        <button id="mark-attendance">Save Attendance</button>
+        <button id="view-attendance-history">View Attendance History</button>
+      </div>
+
+      <div id="attendance-history" class="history-area"></div>
+    </div>
+  </article>
+
+  <!-- COLLAPSIBLE SECTION : Assignments -->
+  <article class="card" id="card-assignment">
+    <header class="card-header clickable">
+      <h2>Upload Assignment</h2>
+      <button class="toggle-btn" aria-expanded="false">Open</button>
+    </header>
+    <div class="card-body collapsed" id="assignment-section">
+      <input type="file" id="assignment-file" accept=".pdf,.doc,.docx" />
+      <button id="upload-btn">Upload</button>
+      <p id="upload-msg" class="small-note"></p>
+
+      <hr />
+      <h3>Your Assignments</h3>
+      <div id="assignments-list" class="list"></div>
+    </div>
+  </article>
+
+  <!-- COLLAPSIBLE SECTION : Notifications -->
+  <article class="card" id="card-notifications">
+    <header class="card-header clickable">
+      <h2>Notifications</h2>
+      <button class="toggle-btn" aria-expanded="false">Open</button>
+    </header>
+    <div class="card-body collapsed" id="notifications-section">
+      <div id="notifications" class="notifications-box"></div>
+      <button id="clear-notifications">Clear Notifications</button>
+    </div>
+  </article>
+</main>
+
+<script src="teacher.js"></script>
+</body>
+</html>
