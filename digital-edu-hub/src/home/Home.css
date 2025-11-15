@@ -63,6 +63,17 @@ select, input {
     transition: all 0.3s ease;
     box-sizing: border-box; /* ensures padding doesn't break width */
 }
+#studentName {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 10px 0;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    outline: none;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
 
 select:focus, input:focus {
     border-color: #f57c00;
