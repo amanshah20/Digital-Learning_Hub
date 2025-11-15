@@ -1,33 +1,37 @@
+// ---------------------------------------------
+// TEACHER & STUDENT LOGIN SYSTEM
+// ---------------------------------------------
+
 // Teacher credentials (5-digit IDs)
 let teachers = [
-    {id: "12345", password: null},
-    {id: "23456", password: null},
-    {id: "34567", password: null},
-    {id: "45678", password: null},
-    {id: "56789", password: null},
-    {id: "67890", password: null},
-    {id: "78901", password: null},
-    {id: "89012", password: null},
-    {id: "90123", password: null},
-    {id: "01234", password: null}
+    { id: "12345", password: null },
+    { id: "23456", password: null },
+    { id: "34567", password: null },
+    { id: "45678", password: null },
+    { id: "56789", password: null },
+    { id: "67890", password: null },
+    { id: "78901", password: null },
+    { id: "89012", password: null },
+    { id: "90123", password: null },
+    { id: "01234", password: null }
 ];
 
 // Student credentials (8-digit IDs + name)
 let students = [
-    {id: "10000001", password: null, name: null},
-    {id: "10000002", password: null, name: null},
-    {id: "10000003", password: null, name: null},
-    {id: "10000004", password: null, name: null},
-    {id: "10000005", password: null, name: null},
-    {id: "10000006", password: null, name: null},
-    {id: "10000007", password: null, name: null},
-    {id: "10000008", password: null, name: null},
-    {id: "10000009", password: null, name: null},
-    {id: "10000010", password: null, name: null}
+    { id: "10000001", password: null, name: null },
+    { id: "10000002", password: null, name: null },
+    { id: "10000003", password: null, name: null },
+    { id: "10000004", password: null, name: null },
+    { id: "10000005", password: null, name: null },
+    { id: "10000006", password: null, name: null },
+    { id: "10000007", password: null, name: null },
+    { id: "10000008", password: null, name: null },
+    { id: "10000009", password: null, name: null },
+    { id: "10000010", password: null, name: null }
 ];
 
 // Dashboard URLs
-const teacherDashboard = "file:///G:/Semester-7/Capdtone_Project/digital-edu-hub/src/Teacher_Dashboard/Teacher.html";
+const teacherDashboard = "file:///G:/Semester-7/Capstone_Project/digital-edu-hub/src/Teacher_Dashboard/Teacher.html";
 const studentDashboard = "file:///G:/Semester-7/Capstone_Project/digital-edu-hub/src/Student_Dashboard/Student.html";
 
 // DOM elements
@@ -43,8 +47,8 @@ loginBtn.disabled = true;
 loginBtn.style.opacity = "0.5";
 
 // Load saved passwords & names
-if(localStorage.getItem("teachers")) teachers = JSON.parse(localStorage.getItem("teachers"));
-if(localStorage.getItem("students")) students = JSON.parse(localStorage.getItem("students"));
+if (localStorage.getItem("teachers")) teachers = JSON.parse(localStorage.getItem("teachers"));
+if (localStorage.getItem("students")) students = JSON.parse(localStorage.getItem("students"));
 
 // Password validation
 function isValidPassword(pwd) {
@@ -56,7 +60,7 @@ function isValidName(name) {
     return /^[A-Za-z ]{1,20}$/.test(name);
 }
 
-// Show name field for student only
+// Show name field for students
 userTypeInput.addEventListener("change", () => {
     if (userTypeInput.value === "student") {
         nameInput.style.display = "block";
@@ -91,7 +95,7 @@ function checkCredentials() {
         return;
     }
 
-    // FIRST-TIME STUDENT NAME SAVE
+    // First-time student name save
     if (userType === "student" && user.name === null) {
         if (!isValidName(name)) {
             errorDiv.innerText = "Name must be letters only (max 20).";
@@ -99,7 +103,7 @@ function checkCredentials() {
             return;
         }
         user.name = name;
-        localStorage.setItem("students", JSON.stringify(userArray));
+        localStorage.setItem("students", JSON.stringify(students));
         errorDiv.innerText = "Name saved!";
     }
 
@@ -115,7 +119,7 @@ function checkCredentials() {
         errorDiv.innerText = "Password saved!";
     }
 
-    // Compare password
+    // Verify password match
     if (user.password === password) {
         loginBtn.disabled = false;
         loginBtn.style.opacity = "1";
@@ -153,7 +157,9 @@ function resetPassword() {
     loginBtn.style.opacity = "0.5";
 }
 
-// Login
+// ------------------------------------------------------------
+// ✅ FINAL UPDATED LOGIN FUNCTION
+// ------------------------------------------------------------
 function login() {
     const userType = userTypeInput.value;
     const userId = userIdInput.value.trim();
@@ -164,21 +170,86 @@ function login() {
 
     if (user && user.password === password) {
 
+        // 🌟 STUDENT LOGIN — Save everything permanently
         if (userType === "student") {
+
+            let studentName = nameInput.value.trim();
+
+            // Always keep student name saved
+            if (studentName && studentName !== "") {
+                user.name = studentName;
+                localStorage.setItem("students", JSON.stringify(students));
+            }
+
+            // Save student ID for dashboard
+            localStorage.setItem("currentStudentId", userId);
+
+            // Save student name for dashboard
             localStorage.setItem("currentStudentName", user.name);
+
+            // Save in global list
+            let allStudents = JSON.parse(localStorage.getItem("allStudents")) || [];
+            let exists = allStudents.find(s => s.id === userId);
+
+            if (!exists) {
+                allStudents.push({
+                    id: userId,
+                    name: user.name
+                });
+                localStorage.setItem("allStudents", JSON.stringify(allStudents));
+            }
         }
 
+        // 🌟 TEACHER LOGIN — Save ID only
         if (userType === "teacher") {
             localStorage.setItem("currentTeacherId", userId);
         }
 
-        window.location.href = userType === "teacher" ? teacherDashboard : studentDashboard;
+        // Redirect
+        window.location.href =
+            userType === "teacher" ? teacherDashboard : studentDashboard;
+
     } else {
         errorDiv.innerText = "Invalid credentials!";
     }
+}
+
+// ------------------------------------------------------------
+// ✅ NEW FUNCTION — UPDATE STUDENT ID
+// ------------------------------------------------------------
+function updateStudentId(oldId, newId) {
+    // Check if newId already exists
+    if (students.find(s => s.id === newId)) {
+        alert("This ID is already taken!");
+        return;
+    }
+
+    let student = students.find(s => s.id === oldId);
+    if (!student) {
+        alert("Student not found!");
+        return;
+    }
+
+    // Update student object
+    student.id = newId;
+    localStorage.setItem("students", JSON.stringify(students));
+
+    // Update current student ID if logged in
+    if (localStorage.getItem("currentStudentId") === oldId) {
+        localStorage.setItem("currentStudentId", newId);
+    }
+
+    // Update allStudents array
+    let allStudents = JSON.parse(localStorage.getItem("allStudents")) || [];
+    let globalStudent = allStudents.find(s => s.id === oldId);
+    if (globalStudent) globalStudent.id = newId;
+    localStorage.setItem("allStudents", JSON.stringify(allStudents));
+
+    alert(`Student ID updated from ${oldId} to ${newId}`);
 }
 
 // Event listeners
 userIdInput.addEventListener("input", checkCredentials);
 passwordInput.addEventListener("input", checkCredentials);
 nameInput.addEventListener("input", checkCredentials);
+loginBtn.addEventListener("click", login);

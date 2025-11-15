@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Courses</title>
+
+  <!-- CSS File -->
+  <link rel="stylesheet" href="courses.css">
+</head>
+
+<body>
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">CS</div>
+      <div>
+        <div style="font-size:15px">StudyCourses</div>
+      </div>
+    </div>
+
+    <div class="searchbox">
+      <input id="search-input" placeholder="Search courses, DSA, algorithms, interview prep, languages..." />
+      <button id="search-btn">Search</button>
+      <div style="width:10px"></div>
+      <div class="top-actions">
+        <div class="chip" id="view-all"></div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:10px;align-items:center;margin-left:12px">
+      <div style="font-size:13px;color:#555">Signed in as <strong>Student</strong></div>
+    </div>
+  </header>
+
+  <!-- PAGE BODY -->
+  <div class="wrap">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <h4>Categories</h4>
+      <div class="category-list" id="category-list">
+        <label class="category"><input type="checkbox" value="dsa" checked /> <span>DSA / Algorithms</span></label>
+        <label class="category"><input type="checkbox" value="classes" checked /> <span>Classes</span></label>
+        <label class="category"><input type="checkbox" value="technical" checked /> <span>Technical Videos</span></label>
+        <label class="category"><input type="checkbox" value="nontechnical" checked /> <span>Non-Technical</span></label>
+        <label class="category"><input type="checkbox" value="interview" checked /> <span>Interview Prep</span></label>
+        <label class="category"><input type="checkbox" value="webdev" checked /> <span>Web Dev</span></label>
+      </div>
+
+      <h4>Tags</h4>
+      <div class="tag-cloud" id="tag-cloud">
+        <div class="tag" data-tag="beginner">Beginner</div>
+        <div class="tag" data-tag="advanced">Advanced</div>
+        <div class="tag" data-tag="arrays">Arrays</div>
+        <div class="tag" data-tag="graphs">Graphs</div>
+        <div class="tag" data-tag="system-design">System Design</div>
+        <div class="tag" data-tag="python">Python</div>
+        <div class="tag" data-tag="java">Java</div>
+      </div>
+
+      <div class="level">
+        <h4>Level</h4>
+        <div style="display:flex;gap:8px">
+          <button onclick="setLevel('all')">All</button>
+          <button onclick="setLevel('beginner')">Beginner</button>
+          <button onclick="setLevel('intermediate')">Intermediate</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- COURSE GRID -->
+    <main class="courses">
+      <div class="hero">
+        <div class="left">
+          <h2>Explore courses & videos</h2>
+          <small>Filters on left — Search or pick a category to quickly find the course you need.</small>
+        </div>
+
+        <div class="controls">
+          <select id="sort">
+            <option value="popular">Sort: Popular</option>
+            <option value="new">Sort: New</option>
+            <option value="alpha">Sort: A → Z</option>
+          </select>
+          <button onclick="clearFilters()">Clear</button>
+        </div>
+      </div>
+
+      <div id="grid" class="grid"></div>
+      <div id="noresult" class="empty" style="display:none">NOT FOUND</div>
+    </main>
+  </div>
+
+  <!-- JS File -->
+  <script src="courses.js"></script>
+
+</body>
+</html>

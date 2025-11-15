@@ -69,7 +69,6 @@ function collectAssignments(){
   teachers.forEach(t=>{
     const arr = t.data.assignments || t.data.assignmentsList || t.data.assignments || [];
     (arr||[]).forEach(a=>{
-      // normalize different shapes
       out.push({
         name: a.name || a.title || "Assignment",
         time: a.time || a.ts || a.uploadedAt || "",
@@ -109,15 +108,12 @@ function collectAttendanceRecords(){
   teachers.forEach(t=>{
     const arr = t.data.attendance || t.data.attendanceRecords || t.data.attendance || [];
     (arr||[]).forEach(rec=>{
-      // rec could be {time, list: [{id,present}, ...]} or {ts, entries}
       const time = rec.time || rec.ts || rec.timestamp || rec.addedAt || rec.ts || TIME();
       const list = rec.list || rec.entries || rec.att || [];
-      // find entries matching this studentId
       const found = (list||[]).find(e => (e.id + "") === (studentId + ""));
       if(found){
         records.push({teacher: t.key.replace("teacherData_",""), time, present: !!found.present});
       } else {
-        // also check older format where list may be array of ids present
         if(Array.isArray(list) && list.includes && list.includes(studentId)){
           records.push({teacher: t.key.replace("teacherData_",""), time, present: true});
         }
@@ -127,7 +123,6 @@ function collectAttendanceRecords(){
   // also check local key studentQRChecks maybe used by QR marking
   const q = JSON.parse(localStorage.getItem("studentQRChecks_"+studentId) || "[]");
   q.forEach(item=> records.push({teacher:"qr", time: item.time, present:true}));
-  // sort by time (string)
   return records.sort((a,b)=> new Date(b.time) - new Date(a.time));
 }
 
@@ -146,7 +141,6 @@ function renderOverview(searchQuery){
   const summary = attendanceSummary();
   const assignments = collectAssignments();
   const classes = collectLiveClasses();
-
   const q = (searchQuery || "").toLowerCase();
 
   $("#page").innerHTML = `
@@ -178,7 +172,6 @@ function renderOverview(searchQuery){
     </div>
   `;
 
-  // attach download handlers
   document.querySelectorAll('#assignList button').forEach(btn=>{
     btn.addEventListener('click', e=>{
       const u = decodeURIComponent(btn.dataset.url || "");
@@ -214,7 +207,6 @@ function drawAttendanceCanvas(percent){
   ctx.scale(devicePixelRatio, devicePixelRatio);
   ctx.clearRect(0,0,w,h);
 
-  // background arc
   const cx = 60, cy = 60, r = 40;
   ctx.lineWidth = 10;
   ctx.beginPath();
@@ -222,7 +214,6 @@ function drawAttendanceCanvas(percent){
   ctx.arc(cx,cy,r, -Math.PI*0.75, Math.PI*0.75);
   ctx.stroke();
 
-  // foreground arc
   const end = -Math.PI*0.75 + ( (Math.PI*1.5) * (percent/100) );
   const grad = ctx.createLinearGradient(0,0,120,0);
   grad.addColorStop(0, 'rgba(255,183,77,0.95)');
@@ -233,7 +224,6 @@ function drawAttendanceCanvas(percent){
   ctx.lineCap = 'round';
   ctx.stroke();
 
-  // text
   ctx.fillStyle = 'rgba(255,255,255,0.95)';
   ctx.font = '16px system-ui';
   ctx.fillText(percent + '%', cx + 90, cy + 6);
@@ -263,7 +253,6 @@ function renderAttendance(){
     </div>
   `;
 
-  // draw small bar graph - simple implementation
   const canvas = $("#attendanceChart");
   const ctx = canvas.getContext('2d');
   const w = canvas.clientWidth;
@@ -271,7 +260,7 @@ function renderAttendance(){
   canvas.height = 160 * devicePixelRatio;
   ctx.scale(devicePixelRatio, devicePixelRatio);
   ctx.clearRect(0,0,w,160);
-  // last 10 records
+
   const last = collectAttendanceRecords().slice(0,10).reverse();
   const barW = (w - 40) / (last.length||1);
   last.forEach((r,i)=>{
@@ -283,7 +272,6 @@ function renderAttendance(){
   $("#qrBtn").addEventListener('click', ()=>{
     const token = $("#qrInput").value.trim();
     if(!token){ alert("Paste QR token"); return; }
-    // token sample "ATTEND_2025-11-15 10:00:00"
     const entry = {time: TIME(), token};
     const key = "studentQRChecks_" + studentId;
     const arr = JSON.parse(localStorage.getItem(key) || "[]");
@@ -338,7 +326,6 @@ function renderMessages(){
   const key = "messages_" + studentId;
   const arr = JSON.parse(localStorage.getItem(key) || "[]");
   const out = arr.length ? arr.slice().reverse().map(m=>`<div style="padding:8px;border-radius:8px;background:rgba(255,255,255,0.02);margin-bottom:8px;"><strong>From: ${m.from}</strong><div style="opacity:0.9">${m.msg}</div><div style="font-size:12px;opacity:0.7">${m.time||''}</div></div>`).join("") : "<div class='small'>No messages</div>";
-  const area = $("#messagesArea") || create('div');
   if($("#messagesArea")) $("#messagesArea").innerHTML = out;
   return arr;
 }
@@ -350,13 +337,11 @@ function renderNotifications(){
   data.forEach(t=>{
     (t.data.notifications || []).forEach(n=> nots.push({teacher:t.key.replace('teacherData_',''), text: n.msg || n.text || n, time: n.ts || n.time || TIME()}));
   });
-  // local notifications also
   const localN = JSON.parse(localStorage.getItem("studentNotifications_"+studentId)||"[]");
   localN.forEach(n=> nots.push(n));
   const area = $("#notifArea");
   if(area) area.innerHTML = nots.length ? nots.slice().reverse().map(n=>`<div class="notification">${n.text} • <small style="opacity:0.8">${n.time}</small></div>`).join("") : "<div class='small'>No notifications</div>";
 
-  // mini badge
   const badge = $("#notif-count");
   if(nots.length>0){ badge.style.display='inline-block'; badge.textContent = nots.length; } else badge.style.display='none';
 }
@@ -385,12 +370,19 @@ function navigateTo(page, q){
   if(page === 'attendance') renderAttendance();
   if(page === 'assignments') renderAssignments();
   if(page === 'live') renderLive();
-  if(page === 'messages'){ $("#page").innerHTML = `<div class="card"><h2>Messages</h2><div id="messagesArea"></div></div>`; renderMessages(); }
+  if(page === 'messages'){ 
+    $("#page").innerHTML = `<div class="card"><h2>Messages</h2><div id="messagesArea"></div></div>`; 
+    renderMessages(); 
+  }
   if(page === 'courses') {
-    $("#page").innerHTML = `<div class="card"><h2>Online Courses</h2><p>Open your course portal below</p><p><a id="courseLink" href="#" target="_blank">Open Course</a></p></div>`;
-    // optionally load from localStorage url
-    const url = localStorage.getItem("studentCourseURL") || "#";
-    $("#courseLink").href = url;
+    const courseURL = "file:///G:/Semester-7/Capstone_Project/digital-edu-hub/src/Student_Courses/courses.html";
+    $("#page").innerHTML = `
+      <div class="card">
+        <h2>Online Courses</h2>
+        <p>Open your course portal below:</p>
+        <p><a id="courseLink" href="${courseURL}" target="_blank">Open Course</a></p>
+      </div>
+    `;
   }
   if(page === 'settings') renderSettings();
 }
