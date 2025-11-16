@@ -375,7 +375,7 @@ function navigateTo(page, q){
     renderMessages(); 
   }
   if(page === 'courses') {
-    const courseURL = "file:///G:/Semester-7/Capstone_Project/digital-edu-hub/src/Student_Courses/courses.html";
+    const courseURL = "../Student_Courses/courses.html";
     $("#page").innerHTML = `
       <div class="card">
         <h2>Online Courses</h2>
