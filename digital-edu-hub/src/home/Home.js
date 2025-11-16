@@ -31,8 +31,8 @@ let students = [
 ];
 
 // Dashboard URLs
-const teacherDashboard = "./src/Teacher_Dashboard/Teacher.html";
-const studentDashboard = "./src/Student_Dashboard/Student.html";
+const teacherDashboard = "../Teacher_Dashboard/Teacher.html";
+const studentDashboard = "../Student_Dashboard/Student.html";
 
 // DOM elements
 const userTypeInput = document.getElementById("userType");
