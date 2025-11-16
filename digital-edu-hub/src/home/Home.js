@@ -31,8 +31,8 @@ let students = [
 ];
 
 // Dashboard URLs
-const teacherDashboard = "file:///G:/Semester-7/Capstone_Project/digital-edu-hub/src/Teacher_Dashboard/Teacher.html";
-const studentDashboard = "file:///G:/Semester-7/Capstone_Project/digital-edu-hub/src/Student_Dashboard/Student.html";
+const teacherDashboard = "./src/Teacher_Dashboard/Teacher.html";
+const studentDashboard = "./src/Student_Dashboard/Student.html";
 
 // DOM elements
 const userTypeInput = document.getElementById("userType");
