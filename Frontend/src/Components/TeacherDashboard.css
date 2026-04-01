@@ -1,0 +1,142 @@
+.teacher-dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 78vh;
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(3, 105, 161, 0.14);
+}
+
+.teacher-sidebar {
+  background: linear-gradient(180deg, #0f766e 0%, #115e59 100%);
+  color: #ecfeff;
+  padding: 24px 18px;
+}
+
+.teacher-sidebar h2 {
+  margin-bottom: 18px;
+}
+
+.teacher-sidebar ul {
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+
+.teacher-sidebar li {
+  padding: 10px;
+  border-radius: 10px;
+  color: #99f6e4;
+  cursor: pointer;
+}
+
+.teacher-sidebar li.active,
+.teacher-sidebar li:hover {
+  background: rgba(15, 23, 42, 0.28);
+  color: #ffffff;
+}
+
+.teacher-main {
+  background: #f0fdfa;
+  padding: 24px;
+}
+
+.teacher-main h2 {
+  color: #134e4a;
+  margin-bottom: 16px;
+}
+
+.teacher-cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.teacher-card {
+  background: #ffffff;
+  border: 1px solid #ccfbf1;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.teacher-card h3 {
+  font-size: 0.9rem;
+  color: #0f766e;
+  margin-bottom: 8px;
+}
+
+.teacher-card p {
+  font-size: 1.35rem;
+  color: #134e4a;
+  font-weight: 700;
+}
+
+.teacher-panel {
+  background: #ffffff;
+  border: 1px solid #ccfbf1;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.teacher-panel h3 {
+  color: #0f766e;
+  margin-bottom: 12px;
+}
+
+.teacher-table-wrap {
+  overflow-x: auto;
+}
+
+.teacher-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.teacher-table th,
+.teacher-table td {
+  text-align: left;
+  padding: 10px;
+  border-bottom: 1px solid #ccfbf1;
+  color: #134e4a;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.badge.reviewed {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.badge.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+@media (max-width: 1080px) {
+  .teacher-dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  .teacher-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .teacher-main {
+    padding: 16px;
+  }
+
+  .teacher-cards {
+    grid-template-columns: 1fr;
+  }
+}
