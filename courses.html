@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduVerse - Learn Coding</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            cursor: pointer;
+        }
+
+        .back-home {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #64748b;
+            font-size: 1.1rem;
+        }
+
+        /* Courses Grid */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.07);
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.15);
+        }
+
+        .course-thumbnail {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+        }
+
+        .course-info {
+            padding: 1.5rem;
+        }
+
+        .course-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .course-instructor {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .course-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin: 1rem 0;
+        }
+
+        .course-price span {
+            font-size: 0.9rem;
+            color: #999;
+            text-decoration: line-through;
+            font-weight: normal;
+        }
+
+        .enroll-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 12px;
+            width: 100%;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .enroll-btn:hover {
+            transform: scale(1.02);
+        }
+
+        /* Course Detail Page */
+        .course-detail {
+            display: none;
+        }
+
+        .course-header {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.07);
+        }
+
+        .course-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .course-meta {
+            display: flex;
+            gap: 2rem;
+            margin: 1rem 0;
+            color: #64748b;
+        }
+
+        /* Overall Progress Bar */
+        .overall-progress {
+            background: #e2e8f0;
+            border-radius: 10px;
+            height: 12px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .overall-progress-fill {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 10px;
+            height: 100%;
+            transition: width 0.5s;
+        }
+
+        .progress-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .progress-stat {
+            text-align: center;
+        }
+
+        .progress-stat .number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        /* Course Layout */
+        .course-layout {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 2rem;
+        }
+
+        /* Modules Sidebar */
+        .modules-sidebar {
+            background: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 80px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.07);
+        }
+
+        .modules-sidebar h3 {
+            margin-bottom: 1rem;
+        }
+
+        .module-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .module-card.active {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .module-card.completed {
+            background: #f0fdf4;
+            border-color: #22c55e;
+        }
+
+        .module-title {
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .module-status {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 20px;
+        }
+
+        .module-status.done {
+            background: #22c55e;
+            color: white;
+        }
+
+        .module-status.pending {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .module-progress {
+            margin-top: 0.5rem;
+        }
+
+        .module-progress-bar {
+            background: #e2e8f0;
+            border-radius: 5px;
+            height: 4px;
+            margin-top: 0.3rem;
+            overflow: hidden;
+        }
+
+        .module-progress-fill {
+            background: #22c55e;
+            border-radius: 5px;
+            height: 100%;
+            transition: width 0.3s;
+        }
+
+        /* Content Area */
+        .content-area {
+            background: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.07);
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .mark-watched-btn {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 1rem 0;
+            font-weight: bold;
+        }
+
+        .quiz-section, .assignment-section {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .quiz-link {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            margin: 0.5rem 0;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin: 0.5rem 0;
+            font-family: monospace;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #f59e0b, #ea580c);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .completed-badge {
+            background: #22c55e;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        /* Payment Modal */
+        .payment-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .payment-content {
+            background: white;
+            border-radius: 24px;
+            padding: 2rem;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .payment-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 12px;
+            width: 100%;
+            margin-top: 1rem;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .close {
+            float: right;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 900px) {
+            .course-layout {
+                grid-template-columns: 1fr;
+            }
+            .modules-sidebar {
+                position: relative;
+                top: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="logo" onclick="showHome()">🎓 EduVerse</div>
+        <button class="back-home" onclick="showHome()">🏠 Home</button>
+    </div>
+</nav>
+
+<div class="container">
+    <!-- Home Page -->
+    <div id="homePage">
+        <div class="header">
+            <h1>🚀 Choose Your Learning Path</h1>
+            <p>Master in-demand skills with industry-ready courses</p>
+        </div>
+        <div id="coursesGrid" class="courses-grid"></div>
+    </div>
+
+    <!-- Course Detail Page -->
+    <div id="courseDetailPage" class="course-detail"></div>
+</div>
+
+<!-- Payment Modal -->
+<div id="paymentModal" class="payment-modal">
+    <div class="payment-content">
+        <span class="close" onclick="closePaymentModal()">&times;</span>
+        <h2>🔒 Unlock Course</h2>
+        <p id="paymentCourseName"></p>
+        <div class="course-price" id="paymentPrice"></div>
+        <button class="payment-btn" onclick="confirmPurchase()">💳 Proceed to Payment</button>
+    </div>
+</div>
+
+<script>
+    // ============= COURSES DATA =============
+    const courses = [
+        {
+            id: 1,
+            title: "📊 Data Structures & Algorithms",
+            instructor: "Prof. Anil Kumar",
+            price: 3999,
+            originalPrice: 12999,
+            modules: [
+                { id: 1, title: "Arrays & Strings", videoUrl: "https://www.youtube.com/embed/3IuW9nC9Q6Q", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://docs.google.com/forms/d/e/1FAIpQLSf4gGWNYvshZrKYsKsy7Dr2E-ZcD-a18DuLrJHQnrwgm6os3Q/viewform?usp=sharing&ouid=116435405030318627975", assignment: "Write a function to reverse an array. Explain time complexity." },
+                { id: 2, title: "Linked Lists", videoUrl: "https://www.youtube.com/embed/58YbpRDc4yw", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/aBcDeFgHiJkLmNoPq1", assignment: "Detect cycle in linked list. Write code and explain." },
+                { id: 3, title: "Stacks & Queues", videoUrl: "https://www.youtube.com/embed/wjI1WNcIntg", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/XyZwVuTsRqPoNmLi2", assignment: "Implement queue using two stacks." },
+                { id: 4, title: "Trees & Graphs", videoUrl: "https://www.youtube.com/embed/1-lUOFf4lVw", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/AbCdEfGhIjKlMnOpQr", assignment: "Implement binary search tree with insert and delete." }
+            ]
+        },
+        {
+            id: 2,
+            title: "🐍 Data Science Masterclass",
+            instructor: "Dr. Priya Sharma",
+            price: 4499,
+            originalPrice: 14999,
+            modules: [
+                { id: 1, title: "Python Basics", videoUrl: "https://www.youtube.com/embed/kqtD5dpn9C8", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/EbZNi2Nut7c6mBLd8", assignment: "Write Python script to read CSV and clean data." },
+                { id: 2, title: "NumPy & Pandas", videoUrl: "https://www.youtube.com/embed/QeWBS0JYNz4", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/PythonDS2", assignment: "Use Pandas to find mean, median, mode." },
+                { id: 3, title: "Data Visualization", videoUrl: "https://www.youtube.com/embed/3SSI6M-8iWo", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/PythonDS3", assignment: "Create bar chart using Matplotlib." }
+            ]
+        },
+        {
+            id: 3,
+            title: "🌐 HTML5 Complete Guide",
+            instructor: "Sarah Johnson",
+            price: 1999,
+            originalPrice: 5999,
+            modules: [
+                { id: 1, title: "HTML Basics", videoUrl: "https://www.youtube.com/embed/UB1O30fR-EE", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/HTMLModule1", assignment: "Create webpage with header, main, footer." },
+                { id: 2, title: "Forms & Inputs", videoUrl: "https://www.youtube.com/embed/fNcJuP4C9cE", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/HTMLModule2", assignment: "Design registration form." },
+                { id: 3, title: "Semantic HTML", videoUrl: "https://www.youtube.com/embed/kGW8Al_cga4", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/HTMLModule3", assignment: "Convert to semantic HTML." }
+            ]
+        },
+        {
+            id: 4,
+            title: "🎨 CSS3 Styling Mastery",
+            instructor: "Emily Davis",
+            price: 2499,
+            originalPrice: 6999,
+            modules: [
+                { id: 1, title: "CSS Selectors", videoUrl: "https://www.youtube.com/embed/1PnVor36_40", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/CSSModule1", assignment: "Style using different selectors." },
+                { id: 2, title: "Flexbox & Grid", videoUrl: "https://www.youtube.com/embed/JJSoEo8JSnc", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/CSSModule2", assignment: "Create responsive navbar." },
+                { id: 3, title: "Animations", videoUrl: "https://www.youtube.com/embed/SgmNxE8lW5Y", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/CSSModule3", assignment: "Create button animation." },
+                { id: 4, title: "Responsive Design", videoUrl: "https://www.youtube.com/embed/srvUrASNj0s", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/CSSModule4", assignment: "Make responsive webpage." }
+            ]
+        },
+        {
+            id: 5,
+            title: "⚡ JavaScript Complete Guide",
+            instructor: "John Doe",
+            price: 3499,
+            originalPrice: 9999,
+            modules: [
+                { id: 1, title: "Variables & Data Types", videoUrl: "https://www.youtube.com/embed/PkZNo7MFNFg", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/JSModule1", assignment: "Demonstrate all JS data types." },
+                { id: 2, title: "Functions", videoUrl: "https://www.youtube.com/embed/FOD408a4EzA", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/JSModule2", assignment: "Create factorial using recursion." },
+                { id: 3, title: "Arrays & Objects", videoUrl: "https://www.youtube.com/embed/R8rmfD9Y5-c", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/JSModule3", assignment: "Use map, filter, reduce." },
+                { id: 4, title: "DOM Manipulation", videoUrl: "https://www.youtube.com/embed/0ik6X4DJKCc", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/JSModule4", assignment: "Build to-do list app." },
+                { id: 5, title: "Async JS", videoUrl: "https://www.youtube.com/embed/ZYb_ZU8LNxs", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/JSModule5", assignment: "Fetch API data." }
+            ]
+        },
+        {
+            id: 6,
+            title: "⚛️ React.js Mastery",
+            instructor: "Mike Wilson",
+            price: 3999,
+            originalPrice: 12999,
+            modules: [
+                { id: 1, title: "React Basics & JSX", videoUrl: "https://www.youtube.com/embed/SqcY0GlETPk", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/ReactModule1", assignment: "Create first React component." },
+                { id: 2, title: "Components & Props", videoUrl: "https://www.youtube.com/embed/IuOa5D-A0jU", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/ReactModule2", assignment: "Pass data via props." },
+                { id: 3, title: "State & Hooks", videoUrl: "https://www.youtube.com/embed/4UZrsTqkcW4", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/ReactModule3", assignment: "Create counter using useState." },
+                { id: 4, title: "React Router", videoUrl: "https://www.youtube.com/embed/Ul3y1LXxzdU", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/ReactModule4", assignment: "Create multi-page app." }
+            ]
+        }
+    ];
+
+    // Load saved data
+    let purchasedCourses = JSON.parse(localStorage.getItem('purchased')) || {};
+    let courseProgress = JSON.parse(localStorage.getItem('courseProgress')) || {};
+
+    function initProgress(courseId) {
+        if (!courseProgress[courseId]) {
+            courseProgress[courseId] = {};
+            courses.find(c => c.id === courseId).modules.forEach(m => {
+                courseProgress[courseId][m.id] = { watched: false, quizDone: false, assignmentDone: false, assignmentText: "" };
+            });
+            saveProgress();
+        }
+    }
+
+    function saveProgress() {
+        localStorage.setItem('courseProgress', JSON.stringify(courseProgress));
+    }
+
+    function getModuleProgress(courseId, moduleId) {
+        return courseProgress[courseId]?.[moduleId] || { watched: false, quizDone: false, assignmentDone: false };
+    }
+
+    function updateModuleProgress(courseId, moduleId, field, value) {
+        if (!courseProgress[courseId]) courseProgress[courseId] = {};
+        if (!courseProgress[courseId][moduleId]) courseProgress[courseId][moduleId] = { watched: false, quizDone: false, assignmentDone: false };
+        courseProgress[courseId][moduleId][field] = value;
+        saveProgress();
+    }
+
+    // Show home page
+    function showHome() {
+        document.getElementById('homePage').style.display = 'block';
+        document.getElementById('courseDetailPage').style.display = 'none';
+        renderCourses();
+    }
+
+    // Render all courses
+    function renderCourses() {
+        const grid = document.getElementById('coursesGrid');
+        grid.innerHTML = '';
+        
+        courses.forEach(course => {
+            initProgress(course.id);
+            const card = document.createElement('div');
+            card.className = 'course-card';
+            card.onclick = () => openCourse(course.id);
+            card.innerHTML = `
+                <div class="course-thumbnail">${course.thumbnail}</div>
+                <div class="course-info">
+                    <h3 class="course-title">${course.title}</h3>
+                    <p class="course-instructor">👨‍🏫 ${course.instructor}</p>
+                    <div class="course-price">₹${course.price} <span>₹${course.originalPrice}</span></div>
+                    <button class="enroll-btn">${purchasedCourses[course.id] ? '📖 Continue Learning' : '🎓 Enroll Now'}</button>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+    }
+
+    // Open course
+    let currentCourse = null;
+    let currentModuleId = null;
+
+    function openCourse(courseId) {
+        currentCourse = courses.find(c => c.id === courseId);
+        initProgress(courseId);
+        
+        if (!purchasedCourses[courseId]) {
+            document.getElementById('paymentCourseName').innerText = currentCourse.title;
+            document.getElementById('paymentPrice').innerHTML = `₹${currentCourse.price} <span>₹${currentCourse.originalPrice}</span>`;
+            document.getElementById('paymentModal').style.display = 'flex';
+            return;
+        }
+        
+        showCourseDetail();
+    }
+
+    function confirmPurchase() {
+        purchasedCourses[currentCourse.id] = true;
+        localStorage.setItem('purchased', JSON.stringify(purchasedCourses));
+        closePaymentModal();
+        showCourseDetail();
+        renderCourses();
+    }
+
+    function showCourseDetail() {
+        document.getElementById('homePage').style.display = 'none';
+        const detailPage = document.getElementById('courseDetailPage');
+        detailPage.style.display = 'block';
+        
+        // Calculate overall progress
+        const modules = currentCourse.modules;
+        let totalTasks = 0;
+        let completedTasks = 0;
+        
+        modules.forEach(m => {
+            const prog = getModuleProgress(currentCourse.id, m.id);
+            totalTasks += 3;
+            if (prog.watched) completedTasks++;
+            if (prog.quizDone) completedTasks++;
+            if (prog.assignmentDone) completedTasks++;
+        });
+        const overallPercent = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
+        
+        detailPage.innerHTML = `
+            <div class="course-header">
+                <h1>${currentCourse.title}</h1>
+                <div class="course-meta">
+                    <span>👨‍🏫 ${currentCourse.instructor}</span>
+                    <span>📚 ${modules.length} Modules</span>
+                </div>
+                <div class="overall-progress">
+                    <div class="overall-progress-fill" style="width: ${overallPercent}%"></div>
+                </div>
+                <div class="progress-stats">
+                    <div class="progress-stat"><div class="number">${Math.round(overallPercent)}%</div><div>Overall Progress</div></div>
+                    <div class="progress-stat"><div class="number">${modules.filter(m => getModuleProgress(currentCourse.id, m.id).watched).length}/${modules.length}</div><div>Videos Watched</div></div>
+                    <div class="progress-stat"><div class="number">${modules.filter(m => getModuleProgress(currentCourse.id, m.id).quizDone).length}/${modules.length}</div><div>Quizzes Done</div></div>
+                    <div class="progress-stat"><div class="number">${modules.filter(m => getModuleProgress(currentCourse.id, m.id).assignmentDone).length}/${modules.length}</div><div>Assignments Done</div></div>
+                </div>
+            </div>
+            
+            <div class="course-layout">
+                <div class="modules-sidebar">
+                    <h3>📖 Course Modules</h3>
+                    <div id="modulesList"></div>
+                </div>
+                <div class="content-area" id="contentArea"></div>
+            </div>
+        `;
+        
+        renderModulesList();
+        
+        // Select first module by default
+        if (modules.length > 0 && !currentModuleId) {
+            selectModule(modules[0].id);
+        } else if (currentModuleId) {
+            selectModule(currentModuleId);
+        }
+    }
+
+    function renderModulesList() {
+        const container = document.getElementById('modulesList');
+        container.innerHTML = '';
+        
+        currentCourse.modules.forEach(module => {
+            const prog = getModuleProgress(currentCourse.id, module.id);
+            let modulePercent = 0;
+            if (prog.watched) modulePercent += 33;
+            if (prog.quizDone) modulePercent += 33;
+            if (prog.assignmentDone) modulePercent += 34;
+            
+            const isCompleted = prog.watched && prog.quizDone && prog.assignmentDone;
+            
+            const moduleDiv = document.createElement('div');
+            moduleDiv.className = `module-card ${currentModuleId === module.id ? 'active' : ''} ${isCompleted ? 'completed' : ''}`;
+            moduleDiv.onclick = () => selectModule(module.id);
+            moduleDiv.innerHTML = `
+                <div class="module-title">
+                    <span>${module.title}</span>
+                    <span class="module-status ${isCompleted ? 'done' : 'pending'}">${isCompleted ? '✅ Done' : '⏳ Pending'}</span>
+                </div>
+                <div class="module-progress">
+                    <div class="module-progress-bar">
+                        <div class="module-progress-fill" style="width: ${modulePercent}%"></div>
+                    </div>
+                </div>
+            `;
+            container.appendChild(moduleDiv);
+        });
+    }
+
+    function selectModule(moduleId) {
+        currentModuleId = moduleId;
+        const module = currentCourse.modules.find(m => m.id === moduleId);
+        const prog = getModuleProgress(currentCourse.id, moduleId);
+        
+        renderModulesList();
+        
+        const contentArea = document.getElementById('contentArea');
+        contentArea.innerHTML = `
+            <h2>${module.title}</h2>
+            
+            <div class="video-container">
+                <iframe src="${module.videoUrl}" frameborder="0" allowfullscreen></iframe>
+            </div>
+            
+            ${!prog.watched ? `<button class="mark-watched-btn" onclick="markWatched(${moduleId})">✅ Mark Video as Watched</button>` : '<p style="color:green; margin:1rem 0">✅ Video Completed! +50 XP</p>'}
+            
+            <div class="quiz-section">
+                <h3>📝 Module Quiz</h3>
+                ${!prog.quizDone ? 
+                    `<a href="${module.quizLink}" target="_blank" class="quiz-link">📋 Open Google Form Quiz</a>
+                     <button class="submit-btn" onclick="markQuizDone(${moduleId})" style="margin-left:0.5rem">✓ Mark Quiz as Done</button>` : 
+                    '<p style="color:green">✅ Quiz Completed! +50 XP</p>'}
+            </div>
+            
+            <div class="assignment-section">
+                <h3>📎 Assignment</h3>
+                <p><strong>Question:</strong> ${module.assignment}</p>
+                ${!prog.assignmentDone ? 
+                    `<textarea id="assignmentText" rows="4" placeholder="Write your answer here...">${prog.assignmentText || ''}</textarea>
+                     <button class="submit-btn" onclick="submitAssignment(${moduleId})">📤 Submit Assignment</button>` : 
+                    '<p style="color:green">✅ Assignment Submitted! +50 XP</p>'}
+            </div>
+        `;
+    }
+
+    function markWatched(moduleId) {
+        updateModuleProgress(currentCourse.id, moduleId, 'watched', true);
+        selectModule(moduleId);
+        showCourseDetail();
+        alert("🎉 Great! Video marked as watched! +50 XP");
+    }
+
+    function markQuizDone(moduleId) {
+        updateModuleProgress(currentCourse.id, moduleId, 'quizDone', true);
+        selectModule(moduleId);
+        showCourseDetail();
+        alert("🎉 Quiz marked as completed! +50 XP");
+    }
+
+    function submitAssignment(moduleId) {
+        const answer = document.getElementById('assignmentText')?.value;
+        if (!answer || !answer.trim()) {
+            alert("Please write your answer before submitting!");
+            return;
+        }
+        updateModuleProgress(currentCourse.id, moduleId, 'assignmentDone', true);
+        if (!courseProgress[currentCourse.id][moduleId]) courseProgress[currentCourse.id][moduleId] = {};
+        courseProgress[currentCourse.id][moduleId].assignmentText = answer;
+        saveProgress();
+        selectModule(moduleId);
+        showCourseDetail();
+        alert("🎉 Assignment submitted successfully! +50 XP");
+    }
+
+    function closePaymentModal() {
+        document.getElementById('paymentModal').style.display = 'none';
+    }
+
+    // Initialize
+    renderCourses();
+    showHome();
+</script>
+
+</body>
+</html>
