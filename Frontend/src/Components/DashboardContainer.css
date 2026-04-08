@@ -20,10 +20,12 @@
 
 .dashboard-switch {
   display: flex;
+  flex-wrap: wrap;
   background: #ffffff;
   border: 1px solid #e5e7eb;
-  border-radius: 999px;
+  border-radius: 14px;
   padding: 4px;
+  gap: 4px;
 }
 
 .switch-btn {
@@ -31,7 +33,7 @@
   background: transparent;
   color: #4b5563;
   padding: 10px 16px;
-  border-radius: 999px;
+  border-radius: 10px;
   cursor: pointer;
   transition: all 0.2s ease;
   font-weight: 600;
@@ -57,7 +59,7 @@
   }
 
   .switch-btn {
-    flex: 1;
+    flex: 1 1 48%;
     text-align: center;
   }
 }

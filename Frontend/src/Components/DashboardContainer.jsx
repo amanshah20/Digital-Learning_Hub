@@ -1,10 +1,28 @@
 import { useState } from "react";
 import StudentDashboard from "./StudentDashboard";
 import TeacherDashboard from "./TeacherDashboard";
+import AdminDashboard from "./AdminDashboard";
+import CoursesModule from "./CoursesModule";
 import "./DashboardContainer.css";
 
 function DashboardContainer() {
   const [activeDashboard, setActiveDashboard] = useState("student");
+
+  const renderModule = () => {
+    if (activeDashboard === "student") {
+      return <StudentDashboard />;
+    }
+
+    if (activeDashboard === "teacher") {
+      return <TeacherDashboard />;
+    }
+
+    if (activeDashboard === "admin") {
+      return <AdminDashboard />;
+    }
+
+    return <CoursesModule />;
+  };
 
   return (
     <div className="dashboards-root">
@@ -23,10 +41,22 @@ function DashboardContainer() {
           >
             Teacher Dashboard
           </button>
+          <button
+            className={activeDashboard === "admin" ? "switch-btn active" : "switch-btn"}
+            onClick={() => setActiveDashboard("admin")}
+          >
+            Admin Dashboard
+          </button>
+          <button
+            className={activeDashboard === "courses" ? "switch-btn active" : "switch-btn"}
+            onClick={() => setActiveDashboard("courses")}
+          >
+            Courses Module
+          </button>
         </div>
       </header>
 
-      {activeDashboard === "student" ? <StudentDashboard /> : <TeacherDashboard />}
+      {renderModule()}
     </div>
   );
 }
