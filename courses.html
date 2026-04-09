@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>EduVerse - Learn Coding</title>
     <style>
         * {
@@ -14,6 +14,7 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #f0f2f5;
+            overflow-x: hidden;
         }
 
         /* Navbar */
@@ -180,6 +181,7 @@
             gap: 2rem;
             margin: 1rem 0;
             color: #64748b;
+            flex-wrap: wrap;
         }
 
         /* Overall Progress Bar */
@@ -202,6 +204,7 @@
             display: flex;
             gap: 2rem;
             margin-top: 1rem;
+            flex-wrap: wrap;
         }
 
         .progress-stat {
@@ -221,19 +224,43 @@
             gap: 2rem;
         }
 
-        /* Modules Sidebar */
+        /* Modules Sidebar - WITH SCROLL */
         .modules-sidebar {
             background: white;
             border-radius: 20px;
             padding: 1.5rem;
-            height: fit-content;
+            height: calc(100vh - 200px);
             position: sticky;
-            top: 80px;
+            top: 90px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.07);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
 
         .modules-sidebar h3 {
             margin-bottom: 1rem;
+            flex-shrink: 0;
+        }
+
+        .modules-list-container {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .modules-list-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .modules-list-container::-webkit-scrollbar-track {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+
+        .modules-list-container::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 10px;
         }
 
         .module-card {
@@ -243,6 +270,10 @@
             margin-bottom: 1rem;
             cursor: pointer;
             transition: 0.3s;
+        }
+
+        .module-card:last-child {
+            margin-bottom: 0;
         }
 
         .module-card.active {
@@ -260,6 +291,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
         }
 
         .module-status {
@@ -297,12 +330,57 @@
             transition: width 0.3s;
         }
 
-        /* Content Area */
+        /* Content Area - WITH SCROLL */
         .content-area {
             background: white;
             border-radius: 20px;
             padding: 1.5rem;
             box-shadow: 0 4px 6px rgba(0,0,0,0.07);
+            max-height: calc(100vh - 180px);
+            overflow-y: auto;
+        }
+
+        .content-area::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .content-area::-webkit-scrollbar-track {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+
+        .content-area::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 10px;
+        }
+
+        /* Written Content Section */
+        .written-content {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #667eea;
+        }
+
+        .written-content h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .written-content p {
+            line-height: 1.6;
+            color: #334155;
+        }
+
+        .written-content ul {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .written-content li {
+            margin: 0.5rem 0;
+            color: #475569;
         }
 
         .video-container {
@@ -368,15 +446,7 @@
             cursor: pointer;
         }
 
-        .completed-badge {
-            background: #22c55e;
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            display: inline-block;
-        }
-
-        /* Payment Modal */
+        /* Payment Modal - WITH SCROLL */
         .payment-modal {
             display: none;
             position: fixed;
@@ -388,15 +458,68 @@
             z-index: 1000;
             justify-content: center;
             align-items: center;
+            overflow-y: auto;
         }
 
         .payment-content {
             background: white;
             border-radius: 24px;
             padding: 2rem;
-            max-width: 400px;
+            max-width: 450px;
             width: 90%;
             text-align: center;
+            margin: 2rem auto;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .payment-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .payment-content::-webkit-scrollbar-track {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+
+        .payment-content::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 10px;
+        }
+
+        .upi-section {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 12px;
+        }
+
+        .upi-input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin: 0.5rem 0;
+            font-size: 1rem;
+        }
+
+        .qr-scanner-area {
+            margin: 1rem 0;
+            padding: 1rem;
+            background: white;
+            border: 2px dashed #667eea;
+            border-radius: 12px;
+        }
+
+        .qr-placeholder {
+            background: #f1f5f9;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            color: #64748b;
+            flex-direction: column;
         }
 
         .payment-btn {
@@ -413,8 +536,13 @@
 
         .close {
             float: right;
-            font-size: 24px;
+            font-size: 28px;
             cursor: pointer;
+            color: #64748b;
+        }
+
+        .close:hover {
+            color: #000;
         }
 
         @media (max-width: 900px) {
@@ -424,6 +552,20 @@
             .modules-sidebar {
                 position: relative;
                 top: 0;
+                height: 400px;
+                margin-bottom: 1rem;
+            }
+            .content-area {
+                max-height: 600px;
+            }
+            .course-header h1 {
+                font-size: 1.5rem;
+            }
+            .progress-stats {
+                gap: 1rem;
+            }
+            .progress-stat .number {
+                font-size: 1.2rem;
             }
         }
     </style>
@@ -455,15 +597,33 @@
 <div id="paymentModal" class="payment-modal">
     <div class="payment-content">
         <span class="close" onclick="closePaymentModal()">&times;</span>
-        <h2>🔒 Unlock Course</h2>
+        <h2>🔒 Complete Payment</h2>
         <p id="paymentCourseName"></p>
         <div class="course-price" id="paymentPrice"></div>
-        <button class="payment-btn" onclick="confirmPurchase()">💳 Proceed to Payment</button>
+        
+        <div class="upi-section">
+            <label>📱 Enter UPI ID:</label>
+            <input type="text" id="upiId" class="upi-input" placeholder="example@okhdfcbank">
+            
+            <div class="qr-scanner-area">
+                <label>📸 Scan QR Code:</label>
+                <div id="qrScannerPlaceholder" class="qr-placeholder">
+                    <div>
+                        <div style="font-size: 3rem; margin-bottom: 0.5rem;">📱</div>
+                        <p>Click below to upload QR code</p>
+                    </div>
+                </div>
+                <input type="file" id="qrUpload" accept="image/*" style="margin-top: 0.5rem;">
+            </div>
+        </div>
+        
+        <button class="payment-btn" onclick="processUPIPayment()">💳 Pay Now</button>
+        <p style="font-size: 0.7rem; color: #64748b; margin-top: 0.5rem;">🔒 Test Mode: Enter any UPI ID to proceed</p>
     </div>
 </div>
 
 <script>
-    // ============= COURSES DATA =============
+    // ============= COURSES DATA WITH WRITTEN CONTENT =============
     const courses = [
         {
             id: 1,
@@ -472,10 +632,78 @@
             price: 3999,
             originalPrice: 12999,
             modules: [
-                { id: 1, title: "Arrays & Strings", videoUrl: "https://www.youtube.com/embed/3IuW9nC9Q6Q", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://docs.google.com/forms/d/e/1FAIpQLSf4gGWNYvshZrKYsKsy7Dr2E-ZcD-a18DuLrJHQnrwgm6os3Q/viewform?usp=sharing&ouid=116435405030318627975", assignment: "Write a function to reverse an array. Explain time complexity." },
-                { id: 2, title: "Linked Lists", videoUrl: "https://www.youtube.com/embed/58YbpRDc4yw", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/aBcDeFgHiJkLmNoPq1", assignment: "Detect cycle in linked list. Write code and explain." },
-                { id: 3, title: "Stacks & Queues", videoUrl: "https://www.youtube.com/embed/wjI1WNcIntg", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/XyZwVuTsRqPoNmLi2", assignment: "Implement queue using two stacks." },
-                { id: 4, title: "Trees & Graphs", videoUrl: "https://www.youtube.com/embed/1-lUOFf4lVw", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/AbCdEfGhIjKlMnOpQr", assignment: "Implement binary search tree with insert and delete." }
+                { 
+                    id: 1, 
+                    title: "Arrays & Strings", 
+                    videoUrl: "https://www.youtube.com/embed/3IuW9nC9Q6Q",
+                    writtenContent: {
+                        overview: "Arrays are collections of elements stored at contiguous memory locations. They are fundamental data structures used to store multiple items of the same type together.",
+                        keyPoints: [
+                            "Arrays have O(1) access time using index",
+                            "Insertion/Deletion takes O(n) time in worst case",
+                            "Strings are arrays of characters",
+                            "Common operations: traversal, insertion, deletion, searching"
+                        ],
+                        examples: "Example: int[] arr = {1, 2, 3, 4, 5}; // Access arr[2] gives 3"
+                    },
+                    watched: false, quizDone: false, assignmentDone: false, assignmentText: "", 
+                    quizLink: "https://forms.gle/rCkXsNz5YZqW9xLv8", 
+                    assignment: "Write a function to reverse an array. Explain time complexity." 
+                },
+                { 
+                    id: 2, 
+                    title: "Linked Lists", 
+                    videoUrl: "https://www.youtube.com/embed/58YbpRDc4yw",
+                    writtenContent: {
+                        overview: "Linked lists are linear data structures where elements are stored in nodes, and each node points to the next node. Unlike arrays, they are not stored in contiguous memory.",
+                        keyPoints: [
+                            "Dynamic size - can grow/shrink at runtime",
+                            "Insertion/Deletion is O(1) at head",
+                            "No random access - O(n) to find element",
+                            "Types: Singly, Doubly, Circular Linked Lists"
+                        ],
+                        examples: "Node structure: class Node { int data; Node next; }"
+                    },
+                    watched: false, quizDone: false, assignmentDone: false, assignmentText: "", 
+                    quizLink: "https://forms.gle/aBcDeFgHiJkLmNoPq1", 
+                    assignment: "Detect cycle in linked list. Write code and explain." 
+                },
+                { 
+                    id: 3, 
+                    title: "Stacks & Queues", 
+                    videoUrl: "https://www.youtube.com/embed/wjI1WNcIntg",
+                    writtenContent: {
+                        overview: "Stacks and queues are abstract data types that follow specific order principles. Stack follows LIFO (Last In First Out), Queue follows FIFO (First In First Out).",
+                        keyPoints: [
+                            "Stack operations: push, pop, peek - O(1)",
+                            "Queue operations: enqueue, dequeue - O(1)",
+                            "Used in function calls, expression evaluation",
+                            "Can be implemented using arrays or linked lists"
+                        ],
+                        examples: "Stack example: Browser back button. Queue example: Print spooler"
+                    },
+                    watched: false, quizDone: false, assignmentDone: false, assignmentText: "", 
+                    quizLink: "https://forms.gle/XyZwVuTsRqPoNmLi2", 
+                    assignment: "Implement queue using two stacks." 
+                },
+                { 
+                    id: 4, 
+                    title: "Trees & Graphs", 
+                    videoUrl: "https://www.youtube.com/embed/1-lUOFf4lVw",
+                    writtenContent: {
+                        overview: "Trees are hierarchical data structures with a root node and child nodes. Graphs are non-linear structures with nodes and edges, used to represent networks.",
+                        keyPoints: [
+                            "Binary trees have at most 2 children",
+                            "BST property: left < root < right",
+                            "Tree traversals: Inorder, Preorder, Postorder",
+                            "Graph representations: Adjacency matrix, Adjacency list"
+                        ],
+                        examples: "BST Example: 50, 30, 70, 20, 40, 60, 80"
+                    },
+                    watched: false, quizDone: false, assignmentDone: false, assignmentText: "", 
+                    quizLink: "https://forms.gle/AbCdEfGhIjKlMnOpQr", 
+                    assignment: "Implement binary search tree with insert and delete." 
+                }
             ]
         },
         {
@@ -485,9 +713,60 @@
             price: 4499,
             originalPrice: 14999,
             modules: [
-                { id: 1, title: "Python Basics", videoUrl: "https://www.youtube.com/embed/kqtD5dpn9C8", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/EbZNi2Nut7c6mBLd8", assignment: "Write Python script to read CSV and clean data." },
-                { id: 2, title: "NumPy & Pandas", videoUrl: "https://www.youtube.com/embed/QeWBS0JYNz4", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/PythonDS2", assignment: "Use Pandas to find mean, median, mode." },
-                { id: 3, title: "Data Visualization", videoUrl: "https://www.youtube.com/embed/3SSI6M-8iWo", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/PythonDS3", assignment: "Create bar chart using Matplotlib." }
+                { 
+                    id: 1, 
+                    title: "Python Basics", 
+                    videoUrl: "https://www.youtube.com/embed/kqtD5dpn9C8",
+                    writtenContent: {
+                        overview: "Python is a high-level, interpreted programming language known for its simplicity and readability. It's widely used in data science, web development, and automation.",
+                        keyPoints: [
+                            "Dynamically typed language",
+                            "Supports multiple programming paradigms",
+                            "Rich standard library",
+                            "Easy syntax for beginners"
+                        ],
+                        examples: "print('Hello World'); x = 10; if x > 5: print('Greater')"
+                    },
+                    watched: false, quizDone: false, assignmentDone: false, assignmentText: "", 
+                    quizLink: "https://forms.gle/PythonDS1", 
+                    assignment: "Write Python script to read CSV and clean data." 
+                },
+                { 
+                    id: 2, 
+                    title: "NumPy & Pandas", 
+                    videoUrl: "https://www.youtube.com/embed/QeWBS0JYNz4",
+                    writtenContent: {
+                        overview: "NumPy provides support for large multi-dimensional arrays and matrices. Pandas offers data structures like DataFrame for efficient data manipulation and analysis.",
+                        keyPoints: [
+                            "NumPy arrays are faster than Python lists",
+                            "Pandas DataFrame = table with rows and columns",
+                            "Missing data handling in Pandas",
+                            "GroupBy operations for aggregation"
+                        ],
+                        examples: "import pandas as pd; df = pd.read_csv('data.csv')"
+                    },
+                    watched: false, quizDone: false, assignmentDone: false, assignmentText: "", 
+                    quizLink: "https://forms.gle/PythonDS2", 
+                    assignment: "Use Pandas to find mean, median, mode of dataset." 
+                },
+                { 
+                    id: 3, 
+                    title: "Data Visualization", 
+                    videoUrl: "https://www.youtube.com/embed/3SSI6M-8iWo",
+                    writtenContent: {
+                        overview: "Data visualization is the graphical representation of data. It helps in understanding patterns, trends, and outliers in data using charts and plots.",
+                        keyPoints: [
+                            "Matplotlib for basic plots",
+                            "Seaborn for statistical visualizations",
+                            "Plotly for interactive charts",
+                            "Common plots: bar, line, scatter, histogram"
+                        ],
+                        examples: "plt.plot(x, y); plt.show()"
+                    },
+                    watched: false, quizDone: false, assignmentDone: false, assignmentText: "", 
+                    quizLink: "https://forms.gle/PythonDS3", 
+                    assignment: "Create bar chart using Matplotlib." 
+                }
             ]
         },
         {
@@ -497,9 +776,63 @@
             price: 1999,
             originalPrice: 5999,
             modules: [
-                { id: 1, title: "HTML Basics", videoUrl: "https://www.youtube.com/embed/UB1O30fR-EE", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/HTMLModule1", assignment: "Create webpage with header, main, footer." },
-                { id: 2, title: "Forms & Inputs", videoUrl: "https://www.youtube.com/embed/fNcJuP4C9cE", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/HTMLModule2", assignment: "Design registration form." },
-                { id: 3, title: "Semantic HTML", videoUrl: "https://www.youtube.com/embed/kGW8Al_cga4", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/HTMLModule3", assignment: "Convert to semantic HTML." }
+                { 
+                    id: 1, 
+                    title: "HTML Basics", 
+                    videoUrl: "https://www.youtube.com/embed/UB1O30fR-EE",
+                    writtenContent: {
+                        overview: "HTML (HyperText Markup Language) is the standard markup language for creating web pages. It describes the structure of a webpage using elements and tags.",
+                        keyPoints: [
+                            "HTML uses tags like <h1>, <p>, <div>",
+                            "Elements can have attributes",
+                            "Basic structure: <!DOCTYPE html>, <html>, <head>, <body>",
+                            "Semantic tags: <header>, <nav>, <section>, <footer>"
+                        ],
+                        examples: "<h1>Hello World</h1><p>This is a paragraph</p>"
+                    },
+                    watched: false, quizDone: false, assignmentDone: false, assignmentText: "", 
+                    quizLink: "https://forms.gle/HTMLModule1", 
+                    assignment: "Create webpage with header, main, footer." 
+                },
+                { 
+                    id: 2, 
+                    title: "Forms & Inputs", 
+                    videoUrl: "https://www.youtube.com/embed/fNcJuP4C9cE",
+                    writtenContent: {
+                        overview: "HTML forms are used to collect user input. The <form> element contains input fields like text, email, password, radio buttons, checkboxes, and submit buttons.",
+                        keyPoints: [
+                            "Input types: text, email, password, number, date",
+                            "Radio buttons for single selection",
+                            "Checkboxes for multiple selection",
+                            "Select dropdown for options",
+                            "Textarea for multi-line text"
+                        ],
+                        examples: "<input type='text' name='username' placeholder='Enter name'>"
+                    },
+                    watched: false, quizDone: false, assignmentDone: false, assignmentText: "", 
+                    quizLink: "https://forms.gle/HTMLModule2", 
+                    assignment: "Design registration form with all input types." 
+                },
+                { 
+                    id: 3, 
+                    title: "Semantic HTML", 
+                    videoUrl: "https://www.youtube.com/embed/kGW8Al_cga4",
+                    writtenContent: {
+                        overview: "Semantic HTML uses elements that clearly describe their meaning to both the browser and developer. It improves accessibility and SEO.",
+                        keyPoints: [
+                            "<header> for introductory content",
+                            "<nav> for navigation links",
+                            "<main> for primary content",
+                            "<article> for self-contained content",
+                            "<section> for thematic grouping",
+                            "<footer> for footer content"
+                        ],
+                        examples: "<header><nav><ul><li>Home</li></ul></nav></header>"
+                    },
+                    watched: false, quizDone: false, assignmentDone: false, assignmentText: "", 
+                    quizLink: "https://forms.gle/HTMLModule3", 
+                    assignment: "Convert to semantic HTML." 
+                }
             ]
         },
         {
@@ -509,10 +842,79 @@
             price: 2499,
             originalPrice: 6999,
             modules: [
-                { id: 1, title: "CSS Selectors", videoUrl: "https://www.youtube.com/embed/1PnVor36_40", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/CSSModule1", assignment: "Style using different selectors." },
-                { id: 2, title: "Flexbox & Grid", videoUrl: "https://www.youtube.com/embed/JJSoEo8JSnc", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/CSSModule2", assignment: "Create responsive navbar." },
-                { id: 3, title: "Animations", videoUrl: "https://www.youtube.com/embed/SgmNxE8lW5Y", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/CSSModule3", assignment: "Create button animation." },
-                { id: 4, title: "Responsive Design", videoUrl: "https://www.youtube.com/embed/srvUrASNj0s", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/CSSModule4", assignment: "Make responsive webpage." }
+                { 
+                    id: 1, 
+                    title: "CSS Selectors", 
+                    videoUrl: "https://www.youtube.com/embed/1PnVor36_40",
+                    writtenContent: {
+                        overview: "CSS selectors are used to select HTML elements and apply styles. They can target elements by tag name, class, ID, attributes, and relationships.",
+                        keyPoints: [
+                            "Element selector: p { }",
+                            "Class selector: .className { }",
+                            "ID selector: #idName { }",
+                            "Attribute selector: [type='text']",
+                            "Pseudo-classes: :hover, :first-child"
+                        ],
+                        examples: ".btn { background: blue; color: white; }"
+                    },
+                    watched: false, quizDone: false, assignmentDone: false, assignmentText: "", 
+                    quizLink: "https://forms.gle/CSSModule1", 
+                    assignment: "Style using different selectors." 
+                },
+                { 
+                    id: 2, 
+                    title: "Flexbox & Grid", 
+                    videoUrl: "https://www.youtube.com/embed/JJSoEo8JSnc",
+                    writtenContent: {
+                        overview: "Flexbox and Grid are modern CSS layout systems. Flexbox is for one-dimensional layouts (row or column). Grid is for two-dimensional layouts (rows and columns).",
+                        keyPoints: [
+                            "Flexbox properties: display: flex, justify-content, align-items",
+                            "Grid properties: display: grid, grid-template-columns, gap",
+                            "Responsive designs using both systems",
+                            "Better than float-based layouts"
+                        ],
+                        examples: "display: flex; justify-content: space-between;"
+                    },
+                    watched: false, quizDone: false, assignmentDone: false, assignmentText: "", 
+                    quizLink: "https://forms.gle/CSSModule2", 
+                    assignment: "Create responsive navbar using Flexbox." 
+                },
+                { 
+                    id: 3, 
+                    title: "Animations", 
+                    videoUrl: "https://www.youtube.com/embed/SgmNxE8lW5Y",
+                    writtenContent: {
+                        overview: "CSS animations allow elements to transition from one style to another. They can be simple transitions or complex keyframe animations.",
+                        keyPoints: [
+                            "transition for simple hover effects",
+                            "@keyframes for complex animations",
+                            "animation properties: duration, delay, iteration-count",
+                            "transform: rotate, scale, translate"
+                        ],
+                        examples: "transition: all 0.3s ease; transform: scale(1.1);"
+                    },
+                    watched: false, quizDone: false, assignmentDone: false, assignmentText: "", 
+                    quizLink: "https://forms.gle/CSSModule3", 
+                    assignment: "Create button animation." 
+                },
+                { 
+                    id: 4, 
+                    title: "Responsive Design", 
+                    videoUrl: "https://www.youtube.com/embed/srvUrASNj0s",
+                    writtenContent: {
+                        overview: "Responsive web design ensures that websites look good on all devices - desktops, tablets, and mobile phones. It uses flexible layouts and media queries.",
+                        keyPoints: [
+                            "Viewport meta tag for mobile",
+                            "Media queries for different screen sizes",
+                            "Fluid grids and flexible images",
+                            "Mobile-first design approach"
+                        ],
+                        examples: "@media (max-width: 768px) { .container { padding: 10px; } }"
+                    },
+                    watched: false, quizDone: false, assignmentDone: false, assignmentText: "", 
+                    quizLink: "https://forms.gle/CSSModule4", 
+                    assignment: "Make responsive webpage." 
+                }
             ]
         },
         {
@@ -522,11 +924,99 @@
             price: 3499,
             originalPrice: 9999,
             modules: [
-                { id: 1, title: "Variables & Data Types", videoUrl: "https://www.youtube.com/embed/PkZNo7MFNFg", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/JSModule1", assignment: "Demonstrate all JS data types." },
-                { id: 2, title: "Functions", videoUrl: "https://www.youtube.com/embed/FOD408a4EzA", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/JSModule2", assignment: "Create factorial using recursion." },
-                { id: 3, title: "Arrays & Objects", videoUrl: "https://www.youtube.com/embed/R8rmfD9Y5-c", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/JSModule3", assignment: "Use map, filter, reduce." },
-                { id: 4, title: "DOM Manipulation", videoUrl: "https://www.youtube.com/embed/0ik6X4DJKCc", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/JSModule4", assignment: "Build to-do list app." },
-                { id: 5, title: "Async JS", videoUrl: "https://www.youtube.com/embed/ZYb_ZU8LNxs", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/JSModule5", assignment: "Fetch API data." }
+                { 
+                    id: 1, 
+                    title: "Variables & Data Types", 
+                    videoUrl: "https://www.youtube.com/embed/PkZNo7MFNFg",
+                    writtenContent: {
+                        overview: "JavaScript variables are containers for storing data values. JavaScript has dynamic types - the same variable can hold different data types.",
+                        keyPoints: [
+                            "var, let, const for variable declaration",
+                            "Primitive types: String, Number, Boolean, Undefined, Null",
+                            "Reference types: Object, Array, Function",
+                            "typeof operator to check type"
+                        ],
+                        examples: "let name = 'John'; const age = 25; var isStudent = true;"
+                    },
+                    watched: false, quizDone: false, assignmentDone: false, assignmentText: "", 
+                    quizLink: "https://forms.gle/JSModule1", 
+                    assignment: "Demonstrate all JS data types." 
+                },
+                { 
+                    id: 2, 
+                    title: "Functions", 
+                    videoUrl: "https://www.youtube.com/embed/FOD408a4EzA",
+                    writtenContent: {
+                        overview: "Functions are reusable blocks of code that perform specific tasks. They can take parameters and return values.",
+                        keyPoints: [
+                            "Function declaration: function name() {}",
+                            "Function expression: const fn = function() {}",
+                            "Arrow functions: () => {}",
+                            "Parameters and arguments",
+                            "Return statement"
+                        ],
+                        examples: "function add(a,b) { return a+b; } const multiply = (a,b) => a*b;"
+                    },
+                    watched: false, quizDone: false, assignmentDone: false, assignmentText: "", 
+                    quizLink: "https://forms.gle/JSModule2", 
+                    assignment: "Create factorial using recursion." 
+                },
+                { 
+                    id: 3, 
+                    title: "Arrays & Objects", 
+                    videoUrl: "https://www.youtube.com/embed/R8rmfD9Y5-c",
+                    writtenContent: {
+                        overview: "Arrays store multiple values in a single variable. Objects store key-value pairs. Both are essential for managing complex data.",
+                        keyPoints: [
+                            "Array methods: push, pop, map, filter, reduce",
+                            "Object properties and methods",
+                            "Destructuring assignment",
+                            "Spread and rest operators"
+                        ],
+                        examples: "const arr = [1,2,3]; const obj = {name:'John', age:25};"
+                    },
+                    watched: false, quizDone: false, assignmentDone: false, assignmentText: "", 
+                    quizLink: "https://forms.gle/JSModule3", 
+                    assignment: "Use map, filter, reduce on array." 
+                },
+                { 
+                    id: 4, 
+                    title: "DOM Manipulation", 
+                    videoUrl: "https://www.youtube.com/embed/0ik6X4DJKCc",
+                    writtenContent: {
+                        overview: "The Document Object Model (DOM) represents HTML elements as objects. JavaScript can manipulate the DOM to create dynamic web pages.",
+                        keyPoints: [
+                            "Selecting elements: getElementById, querySelector",
+                            "Changing content: textContent, innerHTML",
+                            "Changing styles: style.property",
+                            "Adding/removing elements",
+                            "Event listeners: addEventListener"
+                        ],
+                        examples: "document.getElementById('btn').addEventListener('click', () => alert('Hi'));"
+                    },
+                    watched: false, quizDone: false, assignmentDone: false, assignmentText: "", 
+                    quizLink: "https://forms.gle/JSModule4", 
+                    assignment: "Build to-do list app." 
+                },
+                { 
+                    id: 5, 
+                    title: "Async JavaScript", 
+                    videoUrl: "https://www.youtube.com/embed/ZYb_ZU8LNxs",
+                    writtenContent: {
+                        overview: "Asynchronous JavaScript allows code to run without blocking the main thread. This is crucial for API calls, file reading, and timers.",
+                        keyPoints: [
+                            "Callbacks for async operations",
+                            "Promises for better handling",
+                            "async/await syntax",
+                            "Fetch API for HTTP requests",
+                            "setTimeout and setInterval"
+                        ],
+                        examples: "async function getData() { const res = await fetch(url); return res.json(); }"
+                    },
+                    watched: false, quizDone: false, assignmentDone: false, assignmentText: "", 
+                    quizLink: "https://forms.gle/JSModule5", 
+                    assignment: "Fetch API data." 
+                }
             ]
         },
         {
@@ -536,10 +1026,78 @@
             price: 3999,
             originalPrice: 12999,
             modules: [
-                { id: 1, title: "React Basics & JSX", videoUrl: "https://www.youtube.com/embed/SqcY0GlETPk", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/ReactModule1", assignment: "Create first React component." },
-                { id: 2, title: "Components & Props", videoUrl: "https://www.youtube.com/embed/IuOa5D-A0jU", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/ReactModule2", assignment: "Pass data via props." },
-                { id: 3, title: "State & Hooks", videoUrl: "https://www.youtube.com/embed/4UZrsTqkcW4", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/ReactModule3", assignment: "Create counter using useState." },
-                { id: 4, title: "React Router", videoUrl: "https://www.youtube.com/embed/Ul3y1LXxzdU", watched: false, quizDone: false, assignmentDone: false, assignmentText: "", quizLink: "https://forms.gle/ReactModule4", assignment: "Create multi-page app." }
+                { 
+                    id: 1, 
+                    title: "React Basics & JSX", 
+                    videoUrl: "https://www.youtube.com/embed/SqcY0GlETPk",
+                    writtenContent: {
+                        overview: "React is a JavaScript library for building user interfaces. JSX is a syntax extension that allows writing HTML-like code in JavaScript.",
+                        keyPoints: [
+                            "Components are the building blocks",
+                            "JSX allows HTML in JavaScript",
+                            "ReactDOM.render to display components",
+                            "Virtual DOM for performance"
+                        ],
+                        examples: "const App = () => <h1>Hello React</h1>;"
+                    },
+                    watched: false, quizDone: false, assignmentDone: false, assignmentText: "", 
+                    quizLink: "https://forms.gle/ReactModule1", 
+                    assignment: "Create first React component." 
+                },
+                { 
+                    id: 2, 
+                    title: "Components & Props", 
+                    videoUrl: "https://www.youtube.com/embed/IuOa5D-A0jU",
+                    writtenContent: {
+                        overview: "Components are independent, reusable pieces of UI. Props (properties) are read-only data passed from parent to child components.",
+                        keyPoints: [
+                            "Functional and Class components",
+                            "Props are immutable",
+                            "Component composition",
+                            "Default props and PropTypes"
+                        ],
+                        examples: "const Welcome = (props) => <h1>Hello {props.name}</h1>;"
+                    },
+                    watched: false, quizDone: false, assignmentDone: false, assignmentText: "", 
+                    quizLink: "https://forms.gle/ReactModule2", 
+                    assignment: "Pass data via props." 
+                },
+                { 
+                    id: 3, 
+                    title: "State & Hooks", 
+                    videoUrl: "https://www.youtube.com/embed/4UZrsTqkcW4",
+                    writtenContent: {
+                        overview: "State is mutable data that affects what is rendered. Hooks are functions that let you use state and other React features in functional components.",
+                        keyPoints: [
+                            "useState for local state",
+                            "useEffect for side effects",
+                            "State updates cause re-renders",
+                            "Multiple state variables"
+                        ],
+                        examples: "const [count, setCount] = useState(0);"
+                    },
+                    watched: false, quizDone: false, assignmentDone: false, assignmentText: "", 
+                    quizLink: "https://forms.gle/ReactModule3", 
+                    assignment: "Create counter using useState." 
+                },
+                { 
+                    id: 4, 
+                    title: "React Router", 
+                    videoUrl: "https://www.youtube.com/embed/Ul3y1LXxzdU",
+                    writtenContent: {
+                        overview: "React Router is the standard routing library for React. It enables navigation between different components without refreshing the page.",
+                        keyPoints: [
+                            "BrowserRouter for routing setup",
+                            "Routes and Route components",
+                            "Link for navigation",
+                            "useNavigate hook for programmatic navigation"
+                        ],
+                        examples: "<Route path='/about' element={<About />} />"
+                    },
+                    watched: false, quizDone: false, assignmentDone: false, assignmentText: "", 
+                    quizLink: "https://forms.gle/ReactModule4", 
+                    assignment: "Create multi-page app with routing." 
+                }
             ]
         }
     ];
@@ -621,7 +1179,14 @@
         showCourseDetail();
     }
 
-    function confirmPurchase() {
+    function processUPIPayment() {
+        const upiId = document.getElementById('upiId').value;
+        if (!upiId) {
+            alert("Please enter your UPI ID");
+            return;
+        }
+        
+        alert(`✅ Payment Successful!\nUPI ID: ${upiId}\nCourse: ${currentCourse.title}\n\nYou will receive course access within 2 minutes.`);
         purchasedCourses[currentCourse.id] = true;
         localStorage.setItem('purchased', JSON.stringify(purchasedCourses));
         closePaymentModal();
@@ -669,7 +1234,7 @@
             <div class="course-layout">
                 <div class="modules-sidebar">
                     <h3>📖 Course Modules</h3>
-                    <div id="modulesList"></div>
+                    <div class="modules-list-container" id="modulesListContainer"></div>
                 </div>
                 <div class="content-area" id="contentArea"></div>
             </div>
@@ -686,7 +1251,8 @@
     }
 
     function renderModulesList() {
-        const container = document.getElementById('modulesList');
+        const container = document.getElementById('modulesListContainer');
+        if (!container) return;
         container.innerHTML = '';
         
         currentCourse.modules.forEach(module => {
@@ -725,7 +1291,21 @@
         
         const contentArea = document.getElementById('contentArea');
         contentArea.innerHTML = `
-            <h2>${module.title}</h2>
+            <h2>📘 ${module.title}</h2>
+            
+            <!-- Written Content Section -->
+            <div class="written-content">
+                <h3>📖 What You'll Learn in this Module</h3>
+                <p><strong>Overview:</strong> ${module.writtenContent.overview}</p>
+                <br>
+                <p><strong>📌 Key Points:</strong></p>
+                <ul>
+                    ${module.writtenContent.keyPoints.map(point => `<li>${point}</li>`).join('')}
+                </ul>
+                <br>
+                <p><strong>💡 Example:</strong></p>
+                <p style="background: #e2e8f0; padding: 0.8rem; border-radius: 8px; font-family: monospace;">${module.writtenContent.examples}</p>
+            </div>
             
             <div class="video-container">
                 <iframe src="${module.videoUrl}" frameborder="0" allowfullscreen></iframe>
@@ -734,7 +1314,8 @@
             ${!prog.watched ? `<button class="mark-watched-btn" onclick="markWatched(${moduleId})">✅ Mark Video as Watched</button>` : '<p style="color:green; margin:1rem 0">✅ Video Completed! +50 XP</p>'}
             
             <div class="quiz-section">
-                <h3>📝 Module Quiz</h3>
+                <h3>📝 Module Quiz (MCQ)</h3>
+                <p>Test your knowledge with 5 multiple choice questions</p>
                 ${!prog.quizDone ? 
                     `<a href="${module.quizLink}" target="_blank" class="quiz-link">📋 Open Google Form Quiz</a>
                      <button class="submit-btn" onclick="markQuizDone(${moduleId})" style="margin-left:0.5rem">✓ Mark Quiz as Done</button>` : 
@@ -783,7 +1364,21 @@
 
     function closePaymentModal() {
         document.getElementById('paymentModal').style.display = 'none';
+        document.getElementById('upiId').value = '';
     }
+
+    // QR Upload handler
+    document.getElementById('qrUpload')?.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const qrPlaceholder = document.getElementById('qrScannerPlaceholder');
+                qrPlaceholder.innerHTML = `<img src="${event.target.result}" style="max-width: 100%; max-height: 180px; border-radius: 8px;">`;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
 
     // Initialize
     renderCourses();
